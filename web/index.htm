@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>EDAY: Log In</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<script language="javascript" type="text/javascript">
+
+// <!CDATA[
+
+function Button1_onclick() {
+if(document.myForm.username.value == "")
+    alert("UserName Can Not Be Null!")
+javascript:myForm.submit()
+}
+
+function Button2_onclick() {
+    window.open("RegisterPage.htm","_self");
+
+}
+
+// ]]>
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-lg-offset-4">
+				<legend class="text-center"><h1>E-DAY</h1></legend>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 col-sm-offset-3">
+				<legend class="text-center">Log In</legend>
+				<form name="logInForm" action="login.jsp" method="post">
+					<div class="form-group">
+						<input type="username" class="form-control" name="loginUser" id="loginUser" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Password">
+					</div>
+					<button type="submit" value="Log In" onclick="return Button1_onclick()" class="btn btn-default">Log In</button>
+					</form>
+			</div>
+			<div class="col-sm-3">
+				<legend class="text-center">Register</legend>
+				<form name="logInForm" action="register.jsp" method="post">
+					<div class="form-group">
+						<input type="username" class="form-control" id="registerUser" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="registerPassword" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" id="registerEmail" placeholder="Email">
+					</div>
+					<div class="row form-group">
+						<div class="col-xs-6">
+							<input type="fName" class="form-control" id="registerFName" placeholder="First Name">
+						</div>
+						<div class="col-xs-6">
+							<input type="lName" class="form-control" id="registerLName" placeholder="Last Name">
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-xs-6">
+							<input type="address" class="form-control" id="registerAddress" placeholder="Address">
+						</div>
+						<div class="col-xs-6">
+							<input type="zipCode" class="form-control" id="registerZipCode" placeholder="Zip Code">
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-xs-6">
+							<input type="state" class="form-control" id="registerState" placeholder="State">
+						</div>
+						<div class="col-xs-6">
+							<input type="city" class="form-control" id="registerCity" placeholder="City">
+						</div>
+					</div>
+					<button type="submit" value="Register" onclick="return Button2_onclick()" class="btn btn-default">Register</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
