@@ -45,7 +45,7 @@
 				{
 					// login success
 					session.putValue("login",username);
-					response.sendRedirect("StudentInformation.jsp");
+					response.sendRedirect("CustomerHome.jsp");
 				}
 				else
 				{
