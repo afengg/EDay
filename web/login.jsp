@@ -35,12 +35,13 @@
             
             			conn.setAutoCommit(false);
             			java.sql.Statement stmt1=conn.createStatement();
-            			String query = "SELECT * FROM Person P, Customer C WHERE P.SSN=? and P.Passwd=SHA(?) and C.CustomerID=?";
+            			String query = "SELECT * FROM Person P WHERE P.SSN=? and P.Passwd=SHA(?)";
             			java.sql.PreparedStatement ps = conn.prepareStatement(query);
             			ps.setString(1,username);
             			ps.setString(2,userpasswd);
-            			ps.setString(3,username);
+            			//ps.setString(3,username);
 				java.sql.ResultSet rs = ps.executeQuery();
+				
 				if (rs.next())
 				{
 					// login success
