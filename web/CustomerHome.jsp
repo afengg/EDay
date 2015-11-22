@@ -21,7 +21,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Brand</a>
+                    <a class="navbar-brand" href="#"><%=session.getValue("login")%></a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
@@ -65,6 +65,7 @@
                                                 <input type="copiesSell" class="form-control" name="copiesSell" id="numCopies" placeholder="Copies to Sell">
                                                 <input type="reservePrice" class="form-control" name="reservePrice" id="reservePrice" placeholder="Reserve Price">
                                                 <input type="expireDate" class="form-control" name="expireDate" id="expireDate" placeholder="Expire Date (yyyy-mm-dd hh-mm-ss)">
+                                                
 					</div>
 					<button type="submit" value="Log In" class="btn btn-success">Create</button>
                             </form>
