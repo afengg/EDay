@@ -64,6 +64,7 @@
                             </form>
                     <table class="table">
                         <tr>
+                            <th></th>
                             <th>Auction ID</th>
                             <th>Item ID</th>
                             <th>Seller</th>
@@ -80,6 +81,7 @@
     String mysPassword = "108685053";
     
     String month = request.getParameter("Month");
+        int row1 = 1;
     
   			java.sql.Connection conn=null;
 			try
@@ -98,8 +100,10 @@
             			ps.setString(1,month);
 				java.sql.ResultSet rs = ps.executeQuery();
 				while (rs.next()){
+                                    
 %>
                                 <tr>
+                                    <td><%=row1++%></td>
                                     <td><%=rs.getInt("AuctionID")%></td>
                                     <td><%=rs.getInt("ItemID")%></td>
                                     <td><%=rs.getString("SellerID")%></td>
@@ -109,6 +113,7 @@
                                     <td><%=rs.getString("Monitor")%></td>
                                     <td><%=rs.getDate("SaleDate")%></td>
                                 </tr>
+                                
 <%
                                 }
 %>
@@ -164,6 +169,7 @@
                         <div class="panel-body">
                     <table class="table">
                         <tr>
+                            <th></th>
                             <th>Monitor ID</th>
                             <th>Auction Count</th>
                             <th>Total Revenue</th>
@@ -174,9 +180,15 @@
             			query = "SELECT Monitor , COUNT(*) AS NumAuctions, SUM(SalePrice) AS TotalRevenue FROM Sale GROUP BY Monitor ORDER BY TotalRevenue LIMIT 50";
             			ps = conn.prepareStatement(query);
 				rs = ps.executeQuery();
+                                double prev = -1;
+                                row1 = 0;
 				while (rs.next()){
+                                 if(prev < rs.getDouble("TotalRevenue"))
+                                    row1++;
+                                prev = rs.getDouble("TotalRevenue");   
 %>
                                 <tr>
+                                    <td><%=row1%></td>
                                     <td><%=rs.getString("Monitor")%></td>
                                     <td><%=rs.getInt("NumAuctions")%></td>
                                     <td><%="$" + rs.getDouble("TotalRevenue")%></td>
@@ -198,6 +210,7 @@
                         <div class="panel-body">
                     <table class="table">
                         <tr>
+                            <th></th>
                             <th>Customer ID</th>
                             <th>Total Revenue</th>
                             <th>Sales</th>
@@ -209,9 +222,16 @@
             			query = "SELECT P.CustomerID, P.TotalRevenue, S1.SalesRevenue, S2.PurchasesRevenue FROM ( SELECT SellerID as CustomerID, SUM(SalePrice) as TotalRevenue FROM Sale UNION SELECT BuyerID, SUM(SalePrice) FROM Sale) AS P LEFT JOIN ( SELECT S.SellerID, SUM(S.SalePrice) AS SalesRevenue FROM Sale S GROUP BY S.SellerID ) AS S1 ON P.CustomerID = S1.SellerID LEFT JOIN ( SELECT S.BuyerID, SUM(S.SalePrice) AS PurchasesRevenue FROM Sale S GROUP BY S.BuyerID ) AS S2 ON P.CustomerID = S2.BuyerID GROUP BY P.CustomerID ORDER BY P.TotalRevenue DESC LIMIT 50";
             			ps = conn.prepareStatement(query);
 				rs = ps.executeQuery();
+                                row1 = 0;
+                                prev = -1;
 				while (rs.next()){
+                                if(prev < rs.getDouble("TotalRevenue"))
+                                    row1++;
+                                prev = rs.getDouble("TotalRevenue");
+                           
 %>
                                 <tr>
+                                    <td><%=row1%></td>
                                     <td><%=rs.getString("CustomerID")%></td>
                                     <td><%="$" + rs.getDouble("TotalRevenue")%></td>
                                     <td><%="$" + rs.getDouble("SalesRevenue")%></td>
@@ -234,6 +254,7 @@
                         <div class="panel-body">
                         <table class="table">
                             <tr>
+                                <th></th>
                                 <th>Item Name</th>
                                 <th>Copies Sold</th>
                                 <th>Revenue Generated</th>
@@ -247,9 +268,15 @@
                             ps = conn.prepareStatement(query);
 
                             rs = ps.executeQuery();
+                            row1 = 0;
+                            prev = -1;
                             while(rs.next()){
+                                if(prev < rs.getDouble("TotalSalePrice"))
+                                    row1++;
+                                prev = rs.getDouble("TotalSalePrice");
 %>                              
                             <tr>
+                                <td><%=row1%></td>
                                 <td><%=rs.getString("Name")%></td>
                                 <td><%=rs.getString("TotalCopiesSold")%></td>
                                 <td><%="$" + rs.getString("TotalSalePrice")%></td>
