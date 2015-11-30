@@ -9,6 +9,7 @@
     String mysPassword = "108685053";
     int auctionId = Integer.parseInt(request.getParameter("auctionId"));
     String customerId = ""+session.getValue("login");
+    String customerId2 = "";
   			java.sql.Connection conn=null;
 			try
 			{
@@ -27,7 +28,7 @@
 				java.sql.ResultSet rs = ps.executeQuery();
                                 NumberFormat formatter = new DecimalFormat("#0.00");
 				if(rs.first()){
-                                    
+                                    customerId2 = rs.getString("CustomerId");
 %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -130,6 +131,8 @@
                         </div>
                     </div>
                 </div>
+<%                  if(customerId.equals(customerId2)){
+%>
                     <div class="col-lg-4">
                         <div class="panel panel-success">
                             <div class="panel-heading">
@@ -139,12 +142,16 @@
                                 <form name="BidForm" action="CustomerSubmitBid.jsp" method="POST">
                                     <div class="form-group">
 						<input type="maxmiumBid" class="form-control" name="maximumBid" id="maximumBid" placeholder="Maximum Bid">
+                                                <input type="hidden" class="form-control" name="auctionId" id="maximumBid" value="<%=auctionId%>">                                     
                                     </div>
                                     <button type="submit">Submit Bid</button>
                                 </form>
                             </div>
                         </div>
                     </div>
+<%
+                    }
+%>
             </div>
         </div>
     </body>
