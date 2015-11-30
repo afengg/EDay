@@ -33,9 +33,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-                        <li><a href="#">My Auctions</a></li>
-                        <li><a href="#">My Bids</a></li>
+			<li><a href="CustomerHome.jsp">Home</a></li>
+                        <li><a href="CustomerAuctions.jsp">My Auctions</a></li>
+                        <li><a href="CustomerBids.jsp">My Bids</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a></li>
@@ -58,6 +58,7 @@
                         <th>Minimum Bid</th>
                         <th>Copies Sold</th>
                         <th>Expire Date</th>
+                        <th></th>
                     </tr>
 <%
     String searchKeyword = request.getParameter("searchKeyword");
@@ -98,7 +99,8 @@
                     <td><%=rs.getString("BidIncrement")%></td>
                     <td><%=rs.getString("MinimumBid")%></td>
                     <td><%=rs.getString("Copies_Sold")%></td>
-                    <td><%=rs.getString("ExpireDate")%></td>                  
+                    <td><%=rs.getString("ExpireDate")%></td>
+                    <td><span><form action="CustomerViewAuction.jsp" method="post"><input type="hidden" name="auctionId" id="auctionId" value=<%=rs.getInt("AuctionId")%>><button type="submit">View Details</button></form></span>
                 </tr>
 <% 
                 }

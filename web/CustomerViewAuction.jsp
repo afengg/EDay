@@ -56,7 +56,7 @@
                     <ul class="nav navbar-nav">
 			<li><a href="CustomerHome.jsp">Home</a></li>
                         <li><a href="CustomerAuctions.jsp">My Auctions</a></li>
-                        <li><a href="#">My Bids</a></li>
+                        <li><a href="CustomerBids.jsp">My Bids</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a></li>
@@ -74,12 +74,12 @@
                         <div class="panel-body">
                             <div class="col-xs-6">
                             <ul class="list-unstyled">
+                                <li><b>Seller:</b> <%=rs.getString("CustomerId")%></li>
                                 <li><b>Item:</b> <%=rs.getString("Name")%></li>
                                 <li><b>Type:</b> <%=rs.getString("Type")%></li>
                                 <li><b>Year:</b> <%=rs.getString("Year")%></li>
                                 <li><b>Copies:</b> <%=rs.getString("NumCopies")%></li>
                                 <li><b>Description:</b> <%=rs.getString("Description")%></li>
-                                <li><b>Post Date:</b> <%=rs.getString("PostDate")%></li>
                             </ul>
                             </div>
                             <div class="col-xs-6">
@@ -89,6 +89,7 @@
                                 <li><b>Reserve Price:</b> <%=rs.getString("ReservePrice")%></li>
                                 <li><b>Current Hi Bid:</b> <%=rs.getString("CurrentHiBid")%></li>
                                 <li><b>Current Hi Bidder:</b>  <%=rs.getString("CurrentHiBidder")%></li>
+                                <li><b>Post Date:</b> <%=rs.getString("PostDate")%></li>
                                 <li><b>Expire Date:</b> <%=rs.getString("ExpireDate")%></li>
                                 </ul>
                             </div>
@@ -98,7 +99,6 @@
                             <th>Bidder</th>
                             <th>Bid Price</th>
                             <th>Bid Time</th>
-                            <th></th>
                         </tr>
                         <%
                                 }
@@ -112,7 +112,6 @@
                                     <td><%=rs.getString("CustomerId")%></td>
                                     <td><%=formatter.format(rs.getDouble("BidPrice"))%></td>
                                     <td><%=rs.getString("BidTime")%></td>
-                                    <td><span><form action="CustomerViewAuction.jsp" method="post"><input type="hidden" name="auctionId" id="auctionId" value=<%=rs.getInt("AuctionId")%>><button type="submit">View Details</button></form></span>
                                 </tr>
 <%                          }
                                 
@@ -131,6 +130,21 @@
                         </div>
                     </div>
                 </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Submit a Bid</h2>
+                            </div>
+                            <div class="panel-body">
+                                <form name="BidForm" action="CustomerSubmitBid.jsp" method="POST">
+                                    <div class="form-group">
+						<input type="maxmiumBid" class="form-control" name="maximumBid" id="maximumBid" placeholder="Maximum Bid">
+                                    </div>
+                                    <button type="submit">Submit Bid</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </body>

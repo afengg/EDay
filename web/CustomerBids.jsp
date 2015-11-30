@@ -47,12 +47,10 @@
                         <div class="panel-body">
                     <table class="table">
                         <tr>
-                            <th>Item Name</th>
-                            <th>Item Type</th>
                             <th>Auction Id</th>
-                            <th>Current Hi Bid</th>
-                            <th>Current Hi Bidder</th>
-                            <th>Expire Date</th>
+                            <th>Bid Price</th>
+                            <th>Maximum Bid</th>
+                            <th>Bid Time</th>
                             <th></th>
                         </tr>
 <%
@@ -74,7 +72,7 @@
             			conn=java.sql.DriverManager.getConnection(mysURL,sysprops);
             			System.out.println("Connected successfully to database using JConnect");
                                 conn.setAutoCommit(false);
-            			String query = "SELECT I.Name, I.Type, A.AuctionId, A.CurrentHiBid, A.CurrentHiBidder, P.ExpireDate FROM Item I, Auction A, Post P WHERE P.CustomerId = ? AND P.AuctionId = A.AuctionId AND A.ItemId = I.ItemId";
+            			String query = "SELECT * FROM Bid B WHERE CustomerID = ?";
             			java.sql.PreparedStatement ps = conn.prepareStatement(query);
             			ps.setString(1,customerId);
 				java.sql.ResultSet rs = ps.executeQuery();
@@ -82,13 +80,11 @@
 				while (rs.next()){
 %>
                                 <tr>
-                                    <td><%=rs.getString("Name")%></td>
-                                    <td><%=rs.getString("Type")%></td>
                                     <td><%=rs.getInt("AuctionId")%></td>
-                                    <td><%=formatter.format(rs.getDouble("CurrentHiBid"))%></td>
-                                    <td><%=rs.getString("CurrentHiBidder")%></td>
-                                    <td><%=rs.getString("ExpireDate")%></td>
-                                    <td><span><form action="CustomerViewAuction.jsp" method="post"><input type="hidden" name="auctionId" id="auctionId" value=<%=rs.getInt("AuctionId")%>><button type="submit">View Details</button></form></span>
+                                    <td><%=formatter.format(rs.getDouble("BidPrice"))%></td>
+                                    <td><%=formatter.format(rs.getDouble("MaximumBid"))%></td>
+                                    <td><%=rs.getString("BidTime")%></td>
+                                    <td><span><form action="CustomerViewAuction.jsp" method="post"><input type="hidden" name="auctionId" id="auctionId" value=<%=rs.getInt("AuctionId")%>><button type="submit">View Auction</button></form></span>
                                 </tr>
 <%
                                 }
