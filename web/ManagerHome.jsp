@@ -8,7 +8,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous">
+			
+		</script>
         <title>EDAY - Management</title>
     </head>
     <body>
@@ -61,6 +63,10 @@
                                     <option value= 11>November</option>
                                     <option value= 12>December</option>
                                 </select>
+									Input year: 
+									<input type="text" name="Year" id="Year" onchange='this.form.submit()' >
+									
+								</p>
                             </form>
                     <table class="table">
                         <tr>
@@ -81,6 +87,7 @@
     String mysPassword = "108685053";
     
     String month = request.getParameter("Month");
+	String year = request.getParameter("Year");
         int row1 = 1;
     
   			java.sql.Connection conn=null;
@@ -95,9 +102,13 @@
             			conn=java.sql.DriverManager.getConnection(mysURL,sysprops);
             			System.out.println("Connected successfully to database using JConnect");
                                 conn.setAutoCommit(false);
-            			String query = "SELECT * FROM Sale S WHERE ? = MONTH(S.SaleDate)";
+            			String query = "SELECT * FROM Sale S WHERE ? = MONTH(S.SaleDate) AND ? = YEAR(S.SaleDate)";
             			java.sql.PreparedStatement ps = conn.prepareStatement(query);
             			ps.setString(1,month);
+						if (year.equals(""))
+							ps.setString(1,"*");
+						else
+							ps.setString(1,year);
 				java.sql.ResultSet rs = ps.executeQuery();
 				while (rs.next()){
                                     
@@ -177,7 +188,7 @@
                         </tr>
 <%
 				conn.setAutoCommit(false);
-            			query = "SELECT Monitor , COUNT(*) AS NumAuctions, SUM(SalePrice) AS TotalRevenue FROM Sale GROUP BY Monitor ORDER BY TotalRevenue LIMIT 50";
+            			query = "SELECT Monitor , COUNT(*) AS NumAuctions, SUM(SalePrice) AS TotalRevenue FROM Sale GROUP BY Monitor ORDER BY TotalRevenue LIMIT 1";
             			ps = conn.prepareStatement(query);
 				rs = ps.executeQuery();
                                 double prev = -1;
@@ -219,7 +230,7 @@
                         </tr>
 <%
 				conn.setAutoCommit(false);
-            			query = "SELECT P.CustomerID, P.TotalRevenue, S1.SalesRevenue, S2.PurchasesRevenue FROM ( SELECT SellerID as CustomerID, SUM(SalePrice) as TotalRevenue FROM Sale UNION SELECT BuyerID, SUM(SalePrice) FROM Sale) AS P LEFT JOIN ( SELECT S.SellerID, SUM(S.SalePrice) AS SalesRevenue FROM Sale S GROUP BY S.SellerID ) AS S1 ON P.CustomerID = S1.SellerID LEFT JOIN ( SELECT S.BuyerID, SUM(S.SalePrice) AS PurchasesRevenue FROM Sale S GROUP BY S.BuyerID ) AS S2 ON P.CustomerID = S2.BuyerID GROUP BY P.CustomerID ORDER BY P.TotalRevenue DESC LIMIT 50";
+            			query = "SELECT P.CustomerID, P.TotalRevenue, S1.SalesRevenue, S2.PurchasesRevenue FROM ( SELECT SellerID as CustomerID, SUM(SalePrice) as TotalRevenue FROM Sale UNION SELECT BuyerID, SUM(SalePrice) FROM Sale) AS P LEFT JOIN ( SELECT S.SellerID, SUM(S.SalePrice) AS SalesRevenue FROM Sale S GROUP BY S.SellerID ) AS S1 ON P.CustomerID = S1.SellerID LEFT JOIN ( SELECT S.BuyerID, SUM(S.SalePrice) AS PurchasesRevenue FROM Sale S GROUP BY S.BuyerID ) AS S2 ON P.CustomerID = S2.BuyerID GROUP BY P.CustomerID ORDER BY P.TotalRevenue DESC LIMIT 1";
             			ps = conn.prepareStatement(query);
 				rs = ps.executeQuery();
                                 row1 = 0;
@@ -264,7 +275,7 @@
 	" FROM Item I, Sale S" +
 	" WHERE I.ItemID = S.ItemID" + 
 	" GROUP BY I.Name" +
-	" ORDER BY TotalSalePrice DESC LIMIT 50";
+	" ORDER BY TotalSalePrice DESC LIMIT 1";
                             ps = conn.prepareStatement(query);
 
                             rs = ps.executeQuery();
