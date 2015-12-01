@@ -30,7 +30,7 @@
                         <li><a href="CustomerBids.jsp">My Bids</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                        <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span></a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -92,6 +92,9 @@
     String mysPassword = "108685053";
     
     String customerId = ""+session.getValue("login");
+    if(customerId.equals("")){
+        response.sendRedirect("index.htm");
+    }
   			java.sql.Connection conn=null;
 			try
 			{

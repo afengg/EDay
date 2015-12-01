@@ -37,11 +37,12 @@
                                 ps.setString(5, year);
 				ps.executeUpdate();
                                 conn.commit();
-                                String query2 = "INSERT INTO auction(BidIncrement, MinimumBid, Copies_Sold, ReservePrice, ItemId, Monitor) VALUES (?, ?, ?, ?, (select(LAST_INSERT_ID())), ?)";
+                                String query2 = "INSERT INTO auction(BidIncrement, MinimumBid, CurrentHiBid, Copies_Sold, ReservePrice, ItemId, Monitor) VALUES (?, ?, ?, ?, ?, (select(LAST_INSERT_ID())), ?)";
                                 ps = conn.prepareStatement(query2);
                                 System.out.println(bidInc);
                                 ps.setDouble(1, bidInc);
                                 ps.setDouble(2, minBid);
+                                ps.setDouble(3, minBid);
                                 ps.setInt(3, copiesSell);
                                 ps.setDouble(4, reservePrice);
                                 ps.setString(5, "123-45-6789");

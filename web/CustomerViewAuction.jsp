@@ -9,6 +9,9 @@
     String mysPassword = "108685053";
     int auctionId = Integer.parseInt(request.getParameter("auctionId"));
     String customerId = ""+session.getValue("login");
+    if(customerId.equals("")){
+        response.sendRedirect("index.htm");
+    }
     String customerId2 = "";
   			java.sql.Connection conn=null;
 			try
@@ -29,6 +32,10 @@
                                 NumberFormat formatter = new DecimalFormat("#0.00");
 				if(rs.first()){
                                     customerId2 = rs.getString("CustomerId");
+                                    boolean isResPrice = false;
+                                    if(rs.getDouble("ReservePrice") > 0){
+                                        isResPrice = true;
+                                    }
 %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -87,7 +94,7 @@
                                 <ul class="list-unstyled">
                                 <li><b>Minimum Bid:</b> <%=rs.getString("MinimumBid")%></li>
                                 <li><b>Bid Increment:</b> <%=rs.getString("BidIncrement")%></li>
-                                <li><b>Reserve Price:</b> <%=rs.getString("ReservePrice")%></li>
+                                <li><b>Reserve Price?:</b> <%=isResPrice%></li>
                                 <li><b>Current Hi Bid:</b> <%=rs.getString("CurrentHiBid")%></li>
                                 <li><b>Current Hi Bidder:</b>  <%=rs.getString("CurrentHiBidder")%></li>
                                 <li><b>Post Date:</b> <%=rs.getString("PostDate")%></li>
@@ -131,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-<%                  if(customerId.equals(customerId2)){
+<%                  if(customerId.equals(customerId2) == false){
 %>
                     <div class="col-lg-4">
                         <div class="panel panel-success">
@@ -139,7 +146,7 @@
                                 <h2 class="panel-title">Submit a Bid</h2>
                             </div>
                             <div class="panel-body">
-                                <form name="BidForm" action="CustomerSubmitBid.jsp" method="POST">
+                                <form name="BidForm" action="submitBid.jsp" method="POST">
                                     <div class="form-group">
 						<input type="maxmiumBid" class="form-control" name="maximumBid" id="maximumBid" placeholder="Maximum Bid">
                                                 <input type="hidden" class="form-control" name="auctionId" id="maximumBid" value="<%=auctionId%>">                                     
