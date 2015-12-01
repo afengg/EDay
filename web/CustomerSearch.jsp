@@ -10,6 +10,7 @@
 <html>
      <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
         <!-- Optional theme -->

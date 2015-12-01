@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>EDAY: Log In</title>
+	<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
@@ -16,8 +17,9 @@
 
 function Button1_onclick() {
 if(document.myForm.username.value == "")
-    alert("UserName Can Not Be Null!")
-javascript:logInForm.submit()
+    alert("You must enter a username.");
+else
+	javascript:logInForm.submit();
 }
 
 function Button2_onclick() {
