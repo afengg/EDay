@@ -50,38 +50,44 @@ function Button2_onclick() {
 			</div>
 			<div class="col-sm-3">
 				<legend class="text-center">Register</legend>
-				<form name="logInForm" action="register.jsp" method="post">
+				<form name="registerForm" action="register.jsp" method="post">
 					<div class="form-group">
-						<input type="username" class="form-control" id="registerUser" placeholder="Username">
+						<input type="username" class="form-control" name="registerUser" id="registerUser" placeholder="Username">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="registerPassword" placeholder="Password">
+						<input type="password" class="form-control" name="registerPassword" id="registerPassword" placeholder="Password">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" id="registerEmail" placeholder="Email">
+						<input type="email" class="form-control" name="registerEmail" id="registerEmail" placeholder="Email">
+					</div>
+                                        <div class="form-group">
+						<input type="creditcardnum" class="form-control" name="registerCCN" id="registerCCN" placeholder="Credit Card #">
+					</div>
+                                        <div class="form-group">
+						<input type="telephone" class="form-control" name="registerPhone" id="registerPhone" placeholder="Telephone">
 					</div>
 					<div class="row form-group">
 						<div class="col-xs-6">
-							<input type="fName" class="form-control" id="registerFName" placeholder="First Name">
+							<input type="fName" class="form-control" name="registerFName" id="registerFName" placeholder="First Name">
 						</div>
 						<div class="col-xs-6">
-							<input type="lName" class="form-control" id="registerLName" placeholder="Last Name">
-						</div>
-					</div>
-					<div class="row form-group">
-						<div class="col-xs-6">
-							<input type="address" class="form-control" id="registerAddress" placeholder="Address">
-						</div>
-						<div class="col-xs-6">
-							<input type="zipCode" class="form-control" id="registerZipCode" placeholder="Zip Code">
+							<input type="lName" class="form-control" name="registerLName" id="registerLName" placeholder="Last Name">
 						</div>
 					</div>
 					<div class="row form-group">
 						<div class="col-xs-6">
-							<input type="state" class="form-control" id="registerState" placeholder="State">
+							<input type="address" class="form-control" name="registerAddress" id="registerAddress" placeholder="Address">
 						</div>
 						<div class="col-xs-6">
-							<input type="city" class="form-control" id="registerCity" placeholder="City">
+							<input type="zipCode" class="form-control" name="registerZipCode" id="registerZipCode" placeholder="Zip Code">
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-xs-6">
+							<input type="state" class="form-control" name="registerState" id="registerState" placeholder="State">
+						</div>
+						<div class="col-xs-6">
+							<input type="city" class="form-control" name="registerCity" id="registerCity" placeholder="City">
 						</div>
 					</div>
 					<button type="submit" value="Register" onclick="return Button2_onclick()" class="btn btn-default">Register</button>
