@@ -46,7 +46,10 @@
 					// login success - Employee
 					session.putValue("login", username);
 					System.out.println("Employee login");
-					response.sendRedirect("ManagerHome.jsp");
+					if (rs.getBoolean("IsManager"))
+						response.sendRedirect("ManagerHome.jsp");
+					else
+						response.sendRedirect("CustomerRepHome.jsp");
 				} else {
 					query = "SELECT P.SSN FROM Person P, Employee E WHERE P.SSN=? and P.Passwd=SHA(?)";
 					ps = conn.prepareStatement(query);
