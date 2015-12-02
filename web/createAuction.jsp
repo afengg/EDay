@@ -10,7 +10,7 @@
 	Double bidInc = Double.parseDouble(request.getParameter("bidInc"));
 	int copiesSell = Integer.parseInt(request.getParameter("copiesSell"));
 	Double reservePrice = Double.parseDouble(request.getParameter("reservePrice"));
-	String expireDate = request.getParameter("expireDate");
+	int expireDate = Integer.parseInt(request.getParameter("expireDate"));
 	String mysJDBCDriver = "com.mysql.jdbc.Driver";
 	String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng";
 	String mysUserID = "asfeng";
@@ -37,22 +37,23 @@
 		ps.setString(5, year);
 		ps.executeUpdate();
 		conn.commit();
-		String query2 = "INSERT INTO auction(BidIncrement, MinimumBid, CurrentHiBid, Copies_Sold, ReservePrice, ItemId, Monitor) VALUES (?, ?, ?, ?, ?, (select(LAST_INSERT_ID())), ?)";
+		String query2 = "INSERT INTO auction(BidIncrement, MinimumBid, CurrentHiBid, CurrentHiBidder, Copies_Sold, ReservePrice, ItemId, Monitor) VALUES (?, ?, ?, ?, ?, ?, (select(LAST_INSERT_ID())), ?)";
 		ps = conn.prepareStatement(query2);
 		System.out.println(bidInc);
 		ps.setDouble(1, bidInc);
 		ps.setDouble(2, minBid);
 		ps.setDouble(3, minBid);
-		ps.setInt(3, copiesSell);
-		ps.setDouble(4, reservePrice);
-		ps.setString(5, "123-45-6789");
+                ps.setString(4, "");
+		ps.setInt(5, copiesSell);
+		ps.setDouble(6, reservePrice);
+		ps.setString(7, "123-45-6789");
 		ps.executeUpdate();
 		conn.commit();
-		String query3 = "INSERT INTO post(ExpireDate, PostDate, CustomerId, AuctionId) VALUES(?, NOW(), ?, (select(LAST_INSERT_ID())))";
+		String query3 = "INSERT INTO post(ExpireDate, PostDate, CustomerId, AuctionId) VALUES(NOW() + INTERVAL ? DAY, NOW(), ?, (select(LAST_INSERT_ID())))";
 		ps = conn.prepareStatement(query3);
 		System.out.println(expireDate);
 		System.out.println(customerId);
-		ps.setString(1, expireDate);
+		ps.setInt(1, expireDate);
 		ps.setString(2, customerId);
 		ps.executeUpdate();
 		conn.commit();
@@ -65,6 +66,6 @@
 		} catch (Exception ee) {
 		};
 	}
-
+        response.sendRedirect("CustomerAuctions.jsp");
 
 %>

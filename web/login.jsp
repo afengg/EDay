@@ -51,7 +51,7 @@
 					else
 						response.sendRedirect("CustomerRepHome.jsp");
 				} else {
-					query = "SELECT P.SSN FROM Person P, Employee E WHERE P.SSN=? and P.Passwd=SHA(?)";
+					query = "SELECT P.SSN FROM Person P, Customer C WHERE P.SSN=? and P.Passwd=SHA(?) AND P.SSN = C.CustomerID";
 					ps = conn.prepareStatement(query);
 					// ESCAPE
 					username = username.replace("'", "''");

@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.NumberFormat"%>
 <!DOCTYPE html>
@@ -7,7 +8,14 @@
     String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng?allowMultipleQueries=true"; 
     String mysUserID = "asfeng"; 
     String mysPassword = "108685053";
-    int auctionId = Integer.parseInt(request.getParameter("auctionId"));
+    int auctionId;
+    java.util.Date expireDate = new java.util.Date();
+    if(request.getParameter("auctionId") == null){
+        auctionId = Integer.parseInt(""+session.getValue("auctionId"));
+    }
+    else{
+        auctionId = Integer.parseInt(request.getParameter("auctionId"));
+    }
     String customerId = ""+session.getValue("login");
     if(customerId.equals("")){
         response.sendRedirect("index.htm");
@@ -31,6 +39,9 @@
 				java.sql.ResultSet rs = ps.executeQuery();
                                 NumberFormat formatter = new DecimalFormat("#0.00");
 				if(rs.first()){
+                                    Timestamp ts = rs.getTimestamp("ExpireDate");
+                                    expireDate = new java.util.Date(ts.getTime());
+                                    auctionId = rs.getInt("AuctionID");
                                     customerId2 = rs.getString("CustomerId");
                                     boolean isResPrice = false;
                                     if(rs.getDouble("ReservePrice") > 0){
@@ -68,7 +79,7 @@
                         <li><a href="CustomerBids.jsp">My Bids</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                        <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span></a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -139,9 +150,13 @@
                         </div>
                     </div>
                 </div>
-<%                  if(customerId.equals(customerId2) == false){
+<%                  
+                        java.util.Date nowDate = new java.util.Date();
+                        System.out.print(nowDate);
+                        System.out.print(expireDate);
+                        if(customerId.equals(customerId2) == false && expireDate.after(nowDate)){
 %>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-lg-offset-4">
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h2 class="panel-title">Submit a Bid</h2>

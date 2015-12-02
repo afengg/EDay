@@ -65,7 +65,14 @@
 									<input type="bidInc" class="form-control" name="bidInc" id="itemType" placeholder="Bid Increment">
 									<input type="copiesSell" class="form-control" name="copiesSell" id="numCopies" placeholder="Copies to Sell">
 									<input type="reservePrice" class="form-control" name="reservePrice" id="reservePrice" placeholder="Reserve Price">
-									<input type="expireDate" class="form-control" name="expireDate" id="expireDate" placeholder="Expire Date (yyyy-mm-dd hh-mm-ss)">
+									<div class="form-group">
+                                                                        <label for="sel1">Days Until Expiration</label>
+                                                                        <select class="form-control" name="expireDate" id="expireDate">
+                                                                          <option>3</option>
+                                                                          <option>5</option>
+                                                                          <option>7</option>
+                                                                        </select>
+                                                                      </div>
 
 								</div>
 								<button type="submit" value="Log In" class="btn btn-success">Create</button>
@@ -151,7 +158,7 @@
 									if (rs.next()) {
 										typeComp = rs.getString("Type");
 									}
-									query2 = "SELECT P.CustomerID, P.AuctionID, A.ItemId, I.Name, I.Type, I.NumCopies FROM auction A, post P, item I WHERE P.AuctionID = A.AuctionID AND A.ItemID = I.ItemID AND I.Type = ? AND CustomerID NOT IN ( ? )";
+									query2 = "SELECT P.CustomerID, P.AuctionID, A.ItemId, I.Name, I.Type, I.NumCopies FROM auction A, post P, item I, sale S WHERE P.AuctionID = A.AuctionID AND A.ItemID = I.ItemID AND I.Type = ? AND CustomerID NOT IN ( ? ) AND P.AuctionID NOT IN (SELECT S.AuctionID FROM SALE S)";
 									ps = conn.prepareStatement(query2);
 									ps.setString(1, typeComp);
 									ps.setString(2, customerId);
