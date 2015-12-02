@@ -123,7 +123,16 @@
 										System.out.println("Connected successfully to database using JConnect");
 										conn.setAutoCommit(false);
 										
-										java.sql.PreparedStatement ps = conn.prepareStatement(query);
+										// Check if user really is manager.
+										String qcheck = "SELECT IsManager FROM Employee E WHERE E.EmployeeID = ? AND E.IsManager = 1";
+										java.sql.PreparedStatement ps = conn.prepareStatement(qcheck);
+										ps.setString(1, (String)session.getValue("login"));
+										java.sql.ResultSet rs1 = ps.executeQuery();
+										if (!rs1.next())
+											// USER NOT AUTHENTICATED
+											response.sendRedirect("auth.html");
+										
+										ps = conn.prepareStatement(query);
 										//ps.setString(1,month);
 										switch (args) {
 											case 0:

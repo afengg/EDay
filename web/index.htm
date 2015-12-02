@@ -1,29 +1,32 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>EDAY: Log In</title>
 	<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous" >
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 <script language="javascript" type="text/javascript">
 
 // <!CDATA[
 
 function Button1_onclick() {
-if(document.myForm.username.value == "")
+if(document.myForm.username.value === "")
     alert("You must enter a username.");
 else
-	javascript:logInForm.submit();
+	//javascript:logInForm.submit();
 }
 
 function Button2_onclick() {
-    window.open("RegisterPage.htm","_self");
+   // window.open("RegisterPage.htm","_self");
 
 }
 
@@ -52,9 +55,18 @@ function Button2_onclick() {
 			</div>
 			<div class="col-sm-3">
 				<legend class="text-center">Register</legend>
+                <!-- 
+                    SSN, LastName, FirstName, Address, ZipCode, Telephone, Email, City, State, passwd
+                    Employee:
+                        StartDate = Now(), HourlyRate, Level, EmployeeID = SSN, IsManager
+                    Customer:
+                        Rating = 3, CreditCardNum, CustomerID = SSN
+                
+                
+                -->
 				<form name="registerForm" action="register.jsp" method="post">
 					<div class="form-group">
-						<input type="username" class="form-control" name="registerUser" id="registerUser" placeholder="Username">
+						<input type="text" class="form-control" name="registerUser" id="registerUser" placeholder="Username">
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" name="registerPassword" id="registerPassword" placeholder="Password">
@@ -62,41 +74,49 @@ function Button2_onclick() {
 					<div class="form-group">
 						<input type="email" class="form-control" name="registerEmail" id="registerEmail" placeholder="Email">
 					</div>
-                                        <div class="form-group">
-						<input type="creditcardnum" class="form-control" name="registerCCN" id="registerCCN" placeholder="Credit Card #">
+                    <div class="form-group">
+						<input type="text" class="form-control" name="registerCCN" id="registerCCN" placeholder="Credit Card #">
 					</div>
                                         <div class="form-group">
-						<input type="telephone" class="form-control" name="registerPhone" id="registerPhone" placeholder="Telephone">
+						<input type="text" class="form-control" name="registerPhone" id="registerPhone" placeholder="Telephone">
 					</div>
 					<div class="row form-group">
 						<div class="col-xs-6">
-							<input type="fName" class="form-control" name="registerFName" id="registerFName" placeholder="First Name">
+							<input type="text" class="form-control" name="registerFName" id="registerFName" placeholder="First Name">
 						</div>
 						<div class="col-xs-6">
-							<input type="lName" class="form-control" name="registerLName" id="registerLName" placeholder="Last Name">
-						</div>
-					</div>
-					<div class="row form-group">
-						<div class="col-xs-6">
-							<input type="address" class="form-control" name="registerAddress" id="registerAddress" placeholder="Address">
-						</div>
-						<div class="col-xs-6">
-							<input type="zipCode" class="form-control" name="registerZipCode" id="registerZipCode" placeholder="Zip Code">
+							<input type="text" class="form-control" name="registerLName" id="registerLName" placeholder="Last Name">
 						</div>
 					</div>
 					<div class="row form-group">
 						<div class="col-xs-6">
-							<input type="state" class="form-control" name="registerState" id="registerState" placeholder="State">
+							<input type="text" class="form-control" name="registerAddress" id="registerAddress" placeholder="Address">
 						</div>
 						<div class="col-xs-6">
-							<input type="city" class="form-control" name="registerCity" id="registerCity" placeholder="City">
+							<input type="number" class="form-control" name="registerZipCode" id="registerZipCode" placeholder="Zip Code">
 						</div>
 					</div>
+					<div class="row form-group">
+						<div class="col-xs-6">
+							<input type="text" class="form-control" name="registerState" id="registerState" placeholder="State">
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" name="registerCity" id="registerCity" placeholder="City">
+						</div>
+					</div>
+                    <div class="row form-group">
+                            <select class="form-control" name="registerUserType" >
+                                <option value="Customer">Customer</option>
+                                <option value="Customer Representative">Customer Representative</option>
+                                <option value="Manager">Manager</option>
+                            </select>
+					</div>
+						<div class="row-form-group">
+							<input type="number" class="form-control" name="registerHourlyRate" id="registerHourlyRate" placeholder="Hourly Rate"/>
+						</div>                        
+                    
 					<button type="submit" value="Register" onclick="return Button2_onclick()" class="btn btn-default">Register</button>
 				</form>
-			</div>
-			<div class="col-lg-4 col-lg-offset-4">
-				<h1 class="text-center"><a href="help.htm">Help</a></h1>
 			</div>
 		</div>
 	</div>
