@@ -28,12 +28,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-						<li><a href="#">Auction Overview</a></li>
-                        <li><a href="#">Employee Management</a></li>
-                        <li><a href="#">2</a></li>
+						<li><a href="CustomerRepHome.jsp">Auction Overview</a></li>
+						<li><a href="CustomerRepCRecords.jsp">Customer Records</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                        <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span></a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>

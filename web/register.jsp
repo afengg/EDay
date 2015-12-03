@@ -68,7 +68,7 @@
 					ps.executeUpdate();
 					conn.commit();
 				} else {
-					String query2 = "INSERT INTO customer(Rating, CreditCardNum, CustomerId) VALUES (0, ?, ?)";
+					String query2 = "INSERT INTO customer(Rating, CreditCardNum, CustomerId) VALUES (1, ?, ?)";
 					ps = conn.prepareStatement(query2);
 					ps.setString(1, CCN);
 					ps.setString(2, username);
@@ -87,7 +87,7 @@
 					if (userType.contains("Manager"))
 							response.sendRedirect("ManagerHome.jsp");
 					else if (userType.contains("Customer Representative"))
-						response.sendRedirect("ManagerHome.jsp");
+						response.sendRedirect("CustomerRepHome.jsp");
 					else
 						response.sendRedirect("CustomerHome.jsp");
                 } else {
