@@ -1,0 +1,17 @@
+AuctionID	From Params
+ItemID		(Auction) Param.AuctionID . ItemID
+SellerID	CustomerID in Post
+SalePrice	CurrentHiBid
+CopiesSold	equal to previous plus 1, THEN DECREMENT the ITEM.
+BuyerID		Auction.CurrentHiBidder
+Monitor		login session
+SaleDate	Now()
+
+Have: auctionID.
+aid -> post {CustomerID as SellerID}
+aid -> auction {Copies_Sold as CopiesSold + 1, ItemID, Monitor, CurrentHiBidder as BuyerID, CurrentHiBid as SalePrice}
+
+ItemID, 
+
+SELECT 
+FROM 
