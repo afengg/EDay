@@ -39,7 +39,7 @@
         </nav>
         <div class ="container">
             <div class="row"> 
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12 ">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Current Open Auctions</h2>
@@ -79,9 +79,9 @@
                                         // Master query
                                         int args = 3;
 
-                                        String query = "SELECT P.ExpireDate, P.PostDate, P.CustomerID, P.AuctionID, A.CurrentHiBid, I.Name, A.CurrentHiBidder "
+                                        String query = "SELECT DISTINCT P.ExpireDate, P.PostDate, P.CustomerID, P.AuctionID, A.CurrentHiBid, I.Name, A.CurrentHiBidder "
                                                 + "FROM  Post P, Auction A, Item I, Person PE, Sale S "
-                                                + "WHERE P.ExpireDate > NOW() AND P.AuctionID = A.AuctionID AND P.CustomerID = PE.SSN AND I.ItemID = A.ItemID AND P.AuctionID NOT IN (Select AuctionID From Post)";
+                                                + "WHERE P.ExpireDate > NOW() AND P.AuctionID = A.AuctionID AND P.CustomerID = PE.SSN AND I.ItemID = A.ItemID AND P.AuctionID NOT IN (Select AuctionID From Sale)";
                                         //connect to the database
                                         conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
                                         System.out.println("Connected successfully to database using JConnect");

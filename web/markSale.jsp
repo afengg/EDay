@@ -106,17 +106,20 @@
 				throw new Exception("Failed to get IDs");
 			}
 
-			ps = conn.prepareStatement(sqlUpdate);
-			ps.setString(1, aid);
-			ps.setString(2, ItemID);
-			ps.setString(3, sellerid);
-			ps.setDouble(4, SalePrice);
-			ps.setInt(5, CopiesSold);
-			ps.setString(6, buyerid);
-			ps.setString(7, (String) session.getValue("login"));
+			java.sql.PreparedStatement ps2 = conn.prepareStatement(sqlUpdate);
+                        System.out.println(aid);
+			ps2.setString(1, aid);
+			ps2.setString(2, ItemID);
+			ps2.setString(3, sellerid);
+			ps2.setDouble(4, SalePrice);
+			ps2.setInt(5, CopiesSold);
+			ps2.setString(6, buyerid);
+			ps2.setString(7, (String) session.getValue("login"));
 			
 
-			ps.executeUpdate();
+			int res = ps2.executeUpdate();
+                        System.out.println(res);
+                        conn.commit();
 
 		} catch (Exception e) {
 			e.printStackTrace();
