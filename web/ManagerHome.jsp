@@ -148,7 +148,7 @@
                                                     java.sql.ResultSet rs1 = ps.executeQuery();
                                                     if (!rs1.next()) // USER NOT AUTHENTICATED
                                                     {
-                                                        response.sendRedirect("auth.html");
+                                                        //response.sendRedirect("auth.html");
                                                     }
 
                                                     ps = conn.prepareStatement(query);

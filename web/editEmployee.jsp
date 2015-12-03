@@ -60,7 +60,7 @@
         ps.setTimestamp(1, java.sql.Timestamp.valueOf(startDate));
         ps.setDouble(2, Double.parseDouble(hourlyRate));
         ps.setInt(3, Integer.parseInt(level));
-        ps.setBoolean(4, isManager.equals("yes"));
+        ps.setBoolean(4, isManager.equals("true"));
         //ps.setBoolean(4,(isManager));
 
         ps.setString(5, username);

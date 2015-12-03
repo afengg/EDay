@@ -27,7 +27,7 @@
         conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
         System.out.println("Connected successfully to database using JConnect");
 
-        String executeCmd = "mysqldump -u " + mysUserID + " -p" + mysPassword + " --add-drop-database -B " + "asfeng" + " -r " + "asfeng" + ".sql";
+        String executeCmd = "Z:\\Desktop\\mysqldump.exe -u -h mysql2.cs.stonybrook.edu:3306  " + mysUserID + " -p" + mysPassword + " --add-drop-database -B " + "Z:\\Desktop\\asfeng" + " -r " + "asfeng" + ".sql";
 
             Process runtimeProcess;
             try {
