@@ -48,19 +48,23 @@
         ps.setString(8, state);
         ps.setString(9, username);
         ps.executeUpdate();
-      
+        conn.commit();
         
         System.out.println(startDate + " " + hourlyRate + " " + level + " " + isManager);
 
         String query2 = "UDPATE Employee E " + 
-                "SET StartDate = ? " +
+                "SET StartDate = ?, HourlyRate = ?, Level = ?, IsManager = ? " +
                 "WHERE E.EmployeeID = ?";
         ps = conn.prepareStatement(query2);
         ps.setString(1, startDate);
-        ps.setString(2, username);
+        ps.setDouble(2, Double.parseDouble(hourlyRate));
+        ps.setInt(3, Integer.parseInt(level));
+        ps.setString(4,(isManager));
+
+        ps.setString(5, username);
         ps.executeUpdate();
         conn.commit();
-        
+
         response.sendRedirect("EmployeeManagement.jsp");
 
     } catch (Exception e) {
