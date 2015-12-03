@@ -102,6 +102,7 @@
                                     while (rs.next()) {
                             %>
                             <% out.write(CustomerID); %><br>
+                            <input type="hidden" name="CustomerID" value="<%= CustomerID %>"/>
                             Last name: <input type="text" name="LastName" value="<%=rs.getString("LastName")%>" /> <br>
                             First name: <input type="text" name="FirstName" value="<%=rs.getString("FirstName")%>" /> <br>
                             Address: <input type="text" name="Address" value="<%=rs.getString("FirstName")%>" /> <br>
@@ -109,6 +110,8 @@
                             Telephone: <input type="text" name="Telephone" value="<%=rs.getString("Telephone")%>" /> <br>
                             Email: <input type="text" name="Email" value="<%=rs.getString("City")%>" /> <br>
                             State: <input type="text" name="State" value="<%=rs.getString("State")%>" /> <br>
+                            Rating <input type="text" name="Rating" value="<%=rs.getString("Rating")%>" /> <br>
+                            Credit Card: <input type="text" name="CreditCardNum" value="<%=rs.getString("CreditCardNum")%>" /> <br>
                             <input type="submit" value="Submit"> <br>
                             
                             <%
