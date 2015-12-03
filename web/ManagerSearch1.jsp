@@ -42,9 +42,9 @@
             <div class="container">
                 <div class="row">
                   <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-warning">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h2 class="panel-title">Search Results</h2>
+                            <h2 class="panel-title">Sales Record</h2>
                         </div>
                         <div class="panel-body">
                 <table class="table">
@@ -116,7 +116,129 @@
 %>
                 </table>
             </div>
-<%
+                    </div>
+                  </div>
+                    <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Summary Listing of Revenue by Item Name</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>Item Name</th>
+                                    <th>Copies Sold</th>
+                                    <th>Revenue Generated</th>
+                                </tr>
+                                <%
+                                    query = "SELECT I.Name, SUM(S.CopiesSold) AS TotalCopiesSold, SUM(S.SalePrice) AS TotalSalePrice"
+                                            + " FROM Item I, Sale S"
+                                            + " WHERE I.ItemID = S.ItemID AND I.Name LIKE ?"
+                                            + " GROUP BY I.Name ";
+                                    ps = conn.prepareStatement(query);
+                                    ps.setString(1,searchKeyword1);
+                                    rs = ps.executeQuery();
+                                   
+                                    while (rs.next()) {
+                                      
+                                %>                              
+                                <tr>
+                                    <td><%=rs.getString("Name")%></td>
+                                    <td><%=rs.getString("TotalCopiesSold")%></td>
+                                    <td><%="$" + rs.getString("TotalSalePrice")%></td>
+                                </tr>
+                                <%
+                                    }
+                                %>
+                            </table>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                            
+                      <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Summary Listing of Revenue by Item Type</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>Item Type</th>
+                                    <th>Copies Sold</th>
+                                    <th>Revenue Generated</th>
+                                </tr>
+                                <%
+                                    query = "SELECT I.Type, SUM(S.CopiesSold) AS TotalCopiesSold, SUM(S.SalePrice) AS TotalSalePrice"
+                                            + " FROM Item I, Sale S"
+                                            + " WHERE I.ItemID = S.ItemID AND I.Type LIKE ?"
+                                            + " GROUP BY I.Type ";
+                                    ps = conn.prepareStatement(query);
+                                    ps.setString(1,searchKeyword1);
+                                    rs = ps.executeQuery();
+                                   
+                                    while (rs.next()) {
+                                      
+                                %>                              
+                                <tr>
+                                    <td><%=rs.getString("Type")%></td>
+                                    <td><%=rs.getString("TotalCopiesSold")%></td>
+                                    <td><%="$" + rs.getString("TotalSalePrice")%></td>
+                                </tr>
+                                <%
+                                    }
+                                %>
+                            </table>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                   <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Summary Listing of Revenue by Customer Name</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Sales</th>
+                                    <th>Purchases</th>
+                                    <th>Revenue Generated</th>
+                                </tr>
+                                <%
+                                   query = "SELECT P2.FirstName, P2.LastName, P1.TotalRevenue, P1.SalesRevenue, P1.PurchasesRevenue FROM ((" + 
+                                           "SELECT P.CustomerID, P.TotalRevenue, S1.SalesRevenue, S2.PurchasesRevenue FROM ( SELECT SellerID as CustomerID, SUM(SalePrice) as TotalRevenue FROM Sale UNION SELECT BuyerID, SUM(SalePrice) FROM Sale) AS P LEFT JOIN ( SELECT S.SellerID, SUM(S.SalePrice) AS SalesRevenue FROM Sale S GROUP BY S.SellerID ) AS S1 ON P.CustomerID = S1.SellerID LEFT JOIN ( SELECT S.BuyerID, SUM(S.SalePrice) AS PurchasesRevenue FROM Sale S GROUP BY S.BuyerID ) AS S2 ON P.CustomerID = S2.BuyerID GROUP BY P.CustomerID" + 
+                                           ") AS P1 LEFT JOIN (SELECT * FROM Person) AS P2 ON P1.CustomerID = P2.SSN) WHERE P2.FirstName LIKE ? OR P2.LastName LIKE ?"; 
+                                   
+                                    ps = conn.prepareStatement(query);
+                                    ps.setString(1,searchKeyword1);
+                                    ps.setString(2,searchKeyword1);
+                                    rs = ps.executeQuery();
+                                   
+                                    while (rs.next()) {
+                                %>                              
+                                
+                                <tr>
+                                    <td><%=rs.getString("FirstName")%></td>
+                                    <td><%=rs.getString("LastName")%></td>
+                                    <td><%="$" + rs.getString("SalesRevenue")%></td>
+                                    <td><%="$" + rs.getString("PurchasesRevenue")%></td>
+                                    <td><%="$" + rs.getString("TotalRevenue")%></td>
+                                </tr>
+                                <%
+                                    }
+                                %>
+                            </table>
+                            </p>
+                        </div>
+                    </div>
+                </div>         
+                </div>
+                   <%
    
                         }
                         catch(Exception e)
@@ -128,10 +250,7 @@
 			
 				try{conn.close();}catch(Exception ee){};
 			}                                  
-%>
-                    </div>
-                  </div>
-                </div>
+%>          
             </div>
         </nav>
     </body>
