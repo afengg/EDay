@@ -1,0 +1,12 @@
+Table: person
+Columns:
+SSN varchar(20) PK 
+LastName varchar(20) 
+FirstName varchar(20) 
+Address varchar(256) 
+ZipCode int(10) 
+Telephone varchar(20) 
+Email varchar(256) 
+City varchar(45) 
+State varchar(45) 
+passwd varchar(45)
