@@ -98,6 +98,7 @@
                     <td><%=rs.getString("HourlyRate")%></td>
                     <td><%= (rs.getBoolean("IsManager") ? "Manager" : "Cust. Rep") %></td>
                     <td><span><form action="ManageEmployee.jsp" method="post"><input type="hidden" name="EmployeeID" id="EmployeeID" value=<%=rs.getInt("EmployeeID")%>><button type="submit">Edit</button></form></span>
+                    <td><span><form action="DeleteEmployee.jsp" method="post"><input type="hidden" name="EmployeeID" id="EmployeeID" value=<%=rs.getInt("EmployeeID")%>><button type="submit">Delete</button></form></span>
                 </tr>
 <% 
                 }
