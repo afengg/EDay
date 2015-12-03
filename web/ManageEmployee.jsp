@@ -9,7 +9,7 @@
     String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng?allowMultipleQueries=true"; 
     String mysUserID = "asfeng"; 
     String mysPassword = "108685053";
-    int employeeId = Integer.parseInt(request.getParameter("EmployeeID"));
+    String employeeId = (request.getParameter("EmployeeID"));
 
   			java.sql.Connection conn=null;
 			try
@@ -25,7 +25,7 @@
                                 conn.setAutoCommit(false);
             			String query = "SELECT * FROM Employee E, Person P WHERE E.EmployeeID = ? AND E.EmployeeID = P.SSN";
             			java.sql.PreparedStatement ps = conn.prepareStatement(query);
-            			ps.setInt(1,employeeId);
+            			ps.setString(1,employeeId);
 				java.sql.ResultSet rs = ps.executeQuery();
                                 rs.next();
 				
@@ -86,10 +86,10 @@
                                                                     State:	<input type="text" class="form-control" name="State" id="itemType" value="<%= rs.getString("State")%>">
                                                                     Telephone: <input type="text" class="form-control" name="Telephone" id="itemType" value="<%= rs.getString("Telephone")%>">
                                                                     Email: <input type="text" class="form-control" name="Email" id="itemType" value="<%= rs.getString("Email")%>">
-                                                                    Start Date: <input type="text" class="form-control" name="StartDate" id="itemType" value="<%= rs.getString("StartDate")%>">
-                                                                    Hourly Rate: <input type="number" class="form-control" name="HourlyRate" id="itemType" value="<%= rs.getString("HourlyRate")%>">
+                                                                    Start Date: <input type="text" class="form-control" name="StartDate" id="itemType" value="<%= rs.getTimestamp("StartDate").toString()%>">
+                                                                    Hourly Rate: <input type="text" class="form-control" name="HourlyRate" id="itemType" value="<%= rs.getDouble("HourlyRate")%>">
                                                                     Level: <input type="number" class="form-control" name="Level" id="itemType" value="<%= rs.getString("Level")%>">
-                                                                    IsManager: <input type="number" class="form-control" name="IsManager" id="itemType" value="<%= rs.getString("IsManager")%>">
+                                                                    IsManager (yes or no): <input type="text" class="form-control" name="IsManager" id="itemType" value="<%= rs.getBoolean("IsManager")%>">
                                                                     <input type="hidden" name="EmployeeId" id="EmployeeId" value=<%=rs.getString("EmployeeID")%>>
 								<button type="submit" value="Edit" class="btn btn-success">Submit</button>
                             </form></div>

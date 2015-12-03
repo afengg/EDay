@@ -20,7 +20,7 @@
     String mysUserID = "asfeng";
     String mysPassword = "108685053";
 
-    session.putValue("login", "");
+    //session.putValue("login", "");
     //throw new RuntimeException();
     // code start here
     java.sql.Connection conn = null;
@@ -52,14 +52,16 @@
         
         System.out.println(startDate + " " + hourlyRate + " " + level + " " + isManager);
 
-        String query2 = "UDPATE Employee E " + 
+        String query2 = "UPDATE  Employee E " + 
                 "SET StartDate = ?, HourlyRate = ?, Level = ?, IsManager = ? " +
                 "WHERE E.EmployeeID = ?";
         ps = conn.prepareStatement(query2);
-        ps.setString(1, startDate);
+        System.out.println(java.sql.Timestamp.valueOf(startDate));
+        ps.setTimestamp(1, java.sql.Timestamp.valueOf(startDate));
         ps.setDouble(2, Double.parseDouble(hourlyRate));
         ps.setInt(3, Integer.parseInt(level));
-        ps.setString(4,(isManager));
+        ps.setBoolean(4, isManager.equals("yes"));
+        //ps.setBoolean(4,(isManager));
 
         ps.setString(5, username);
         ps.executeUpdate();
