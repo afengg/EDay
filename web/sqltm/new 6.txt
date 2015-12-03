@@ -10,3 +10,8 @@ Email varchar(256)
 City varchar(45) 
 State varchar(45) 
 passwd varchar(45)
+
+Customer:
+Rating int(11) 
+CreditCardNum varchar(20) 
+CustomerID varchar(20) PK

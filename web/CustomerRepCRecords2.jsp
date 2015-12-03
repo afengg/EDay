@@ -52,11 +52,12 @@
                         </div>
                         <div class="panel-body">
                                
-                            <form action="CustomerEdit.jsp"  method="POST">
+                            <form action="editCustomer.jsp"  method="POST">
                             
                                 
                             
                             <%
+                                
                                 String mysJDBCDriver = "com.mysql.jdbc.Driver";
                                 String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng?allowMultipleQueries=true";
                                 String mysUserID = "asfeng";
@@ -68,7 +69,7 @@
                                 }
 
                                 int row1 = 1;
-
+                                String CustomerID = request.getParameter("CustomerID");
                                 java.sql.Connection conn = null;
                                 try {
                                     Class.forName(mysJDBCDriver).newInstance();
@@ -79,7 +80,7 @@
                                     // Master query
                                     int args = 3;
 
-                                    String query = "SELECT * FROM Person P, Customer C WHERE P.SSN = C.CustomerID;";
+                                    String query = "SELECT * FROM Person P, Customer C WHERE P.SSN = C.CustomerID AND C.CustomerID = ?;";
                                     //connect to the database
                                     conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
                                     System.out.println("Connected successfully to database using JConnect");
@@ -96,12 +97,19 @@
                                     }
 
                                     ps = conn.prepareStatement(query);
-
+                                    ps.setString(1, CustomerID);
                                     java.sql.ResultSet rs = ps.executeQuery();
                                     while (rs.next()) {
                             %>
-                            
-                            <input type="text" name="LastName" value="0" /> <br>
+                            <% out.write(CustomerID); %><br>
+                            Last name: <input type="text" name="LastName" value="<%=rs.getString("LastName")%>" /> <br>
+                            First name: <input type="text" name="FirstName" value="<%=rs.getString("FirstName")%>" /> <br>
+                            Address: <input type="text" name="Address" value="<%=rs.getString("FirstName")%>" /> <br>
+                            Zip: <input type="number" name="ZipCode" value="<%= Integer.toString(rs.getInt("ZipCode"))%>" /> <br>
+                            Telephone: <input type="text" name="Telephone" value="<%=rs.getString("Telephone")%>" /> <br>
+                            Email: <input type="text" name="Email" value="<%=rs.getString("City")%>" /> <br>
+                            State: <input type="text" name="State" value="<%=rs.getString("State")%>" /> <br>
+                            <input type="submit" value="Submit"> <br>
                             
                             <%
                                     }

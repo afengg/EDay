@@ -53,8 +53,8 @@
                         </div>
                         <div class="panel-body">
                                
-                            <form action="CustomerRepCRecords2.jsp"  method="POST">
-                            <select name="cust">
+                            <form name="myform" action="CustomerRepCRecords2.jsp"  method="POST">
+                            <select name="CustomerID">
                                 
                             
                             <%
@@ -102,7 +102,7 @@
                                     while (rs.next()) {
                             %>
                             
-                            <option value="<%= rs.getString("CustomerID")%>" onchange="this.form.submit()" ><%= rs.getString("CustomerID")%></option>
+                            <option value="<%= rs.getString("CustomerID")%>" ><%= rs.getString("CustomerID")%></option>
                             
                             <%
                                     }
@@ -118,6 +118,7 @@
                             %>
                             
                             </select>
+                            <input type="submit" value="Submit" name="submitbtn" />
                             </form>
                         </div>
                     </div>
