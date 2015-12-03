@@ -49,6 +49,12 @@
                 </div>
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-primary">
+                        
+                        <a href="backup.jsp">Backup Database</a>
+                        
+                    </div>
+                    
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Monthly Sales Report</h2>
                         </div>       
