@@ -42,7 +42,7 @@
                  <div class="col-md-6 col-md-offset-3">
                     <form class="form-inline" name="SearchItemsForm" action="ManagerSearch1.jsp" method="post">
                         <div class="form-group">
-                            <input type="searchKeyword" class="form-control" name="searchKeyword1" id="searchKeyword" placeholder="Enter Item or Customer Name for Sales">
+                            <input type="searchKeyword" class="form-control" name="searchKeyword1" id="searchKeyword" placeholder="Enter Item Name, Type, or Customer Name for Records and Listings">
                             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
                     </form>
