@@ -1,0 +1,24 @@
+Have CustomerRep see:
+
+List of auctions. Add button to mark as sale. Button links to markSale.jsp, which marks a sale.
+
+Customer Records:
+	Box 1: Dropdown with each customer (built via
+	SELECT P.LastName, P.FirstName
+	FROM Person P, Customer C
+	WHERE P.SSN = C.CustomerID
+	
+	). On submit, it goes to CustomerRepChangeCust.jsp, with input boxes for all information + rating. Default rating is 1.
+	
+	Box 2: Produce Customer mailing lists
+	Output table of all needed customer information:
+	FirstName LastName, Address, ZipCode, State, City, Telephone, Email
+	
+	Box 3: "Produce a list of item suggestions for a given customer (based on that customer's past purchases)"
+		If user bought type, add all items where i.type = that.type.
+	
+	SQL:
+	SELECT I.ItemID, I.Name, I.Type, I.Description, I.NumCopies, I.Year
+	FROM Item I, Item IB, Sale S
+	WHERE I.Type = IB.Type AND IB.ItemID = S.ItemID AND S.BuyerID = ?
+	
