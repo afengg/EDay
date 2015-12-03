@@ -166,8 +166,8 @@
                                             %>
                                             <tr>
                                                 <td><%=row1++%></td>
-                                                <td><%=rs.getInt("AuctionID")%></td>
-                                                <td><%=rs.getInt("ItemID")%></td>
+                                                <td><%=rs.getString("AuctionID")%></td>
+                                                <td><%=rs.getString("ItemID")%></td>
                                                 <td><%=rs.getString("SellerID")%></td>
                                                 <td><%=rs.getString("BuyerID")%></td>
                                                 <td><%="$" + rs.getDouble("SalePrice")%></td>

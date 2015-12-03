@@ -1,3 +1,4 @@
+<%@page import="com.mysql.jdbc.PreparedStatement"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
     Document   : CustomerRepCRecords
@@ -46,84 +47,156 @@
         </nav>
         <div class ="container">
             <div class="row"> 
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12 ">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Current Customers</h2>
                         </div>
                         <div class="panel-body">
-                               
+
                             <form name="myform" action="CustomerRepCRecords2.jsp"  method="POST">
-                            <select name="CustomerID">
-                                
-                            
-                            <%
-                                String mysJDBCDriver = "com.mysql.jdbc.Driver";
-                                String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng?allowMultipleQueries=true";
-                                String mysUserID = "asfeng";
-                                String mysPassword = "108685053";
+                                <select name="CustomerID">
 
-                                String login = (String) session.getValue("login");
-                                if (login == null) {
-                                    response.sendRedirect("auth.htm");
-                                }
 
-                                int row1 = 1;
+                                    <%
+                                        String mysJDBCDriver = "com.mysql.jdbc.Driver";
+                                        String mysURL = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/asfeng?allowMultipleQueries=true";
+                                        String mysUserID = "asfeng";
+                                        String mysPassword = "108685053";
 
-                                java.sql.Connection conn = null;
-                                try {
-                                    Class.forName(mysJDBCDriver).newInstance();
-                                    java.util.Properties sysprops = System.getProperties();
-                                    sysprops.put("user", mysUserID);
-                                    sysprops.put("password", mysPassword);
+                                        String login = (String) session.getValue("login");
+                                        if (login == null) {
+                                            response.sendRedirect("auth.htm");
+                                        }
 
-                                    // Master query
-                                    int args = 3;
+                                        int row1 = 1;
 
-                                    String query = "SELECT CustomerID FROM Person P, Customer C WHERE P.SSN = C.CustomerID;";
-                                    //connect to the database
-                                    conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
-                                    System.out.println("Connected successfully to database using JConnect");
-                                    conn.setAutoCommit(false);
+                                        java.sql.Connection conn = null;
+                                        try {
+                                            Class.forName(mysJDBCDriver).newInstance();
+                                            java.util.Properties sysprops = System.getProperties();
+                                            sysprops.put("user", mysUserID);
+                                            sysprops.put("password", mysPassword);
 
-                                    // Check if user really is cust rep. A manager technically has this ability, so we allow it.
-                                    String qcheck = "SELECT IsManager FROM Employee E WHERE E.EmployeeID = ?";
-                                    java.sql.PreparedStatement ps = conn.prepareStatement(qcheck);
-                                    ps.setString(1, (String) session.getValue("login"));
-                                    java.sql.ResultSet rs1 = ps.executeQuery();
-                                    if (!rs1.next()) // USER NOT AUTHENTICATED
-                                    {
-                                        response.sendRedirect("auth.html");
-                                    }
+                                            // Master query
+                                            int args = 3;
 
-                                    ps = conn.prepareStatement(query);
+                                            String query = "SELECT CustomerID FROM Person P, Customer C WHERE P.SSN = C.CustomerID;";
+                                            //connect to the database
+                                            conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
+                                            System.out.println("Connected successfully to database using JConnect");
+                                            conn.setAutoCommit(false);
 
-                                    java.sql.ResultSet rs = ps.executeQuery();
-                                    while (rs.next()) {
-                            %>
-                            
-                            <option value="<%= rs.getString("CustomerID")%>" ><%= rs.getString("CustomerID")%></option>
-                            
-                            <%
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    out.print(e.toString());
-                                } finally {
-                                    try {
-                                        conn.close();
-                                    } catch (Exception ee) {
-                                    };
-                                }
-                            %>
-                            
-                            </select>
-                            <input type="submit" value="Submit" name="submitbtn" />
+                                            // Check if user really is cust rep. A manager technically has this ability, so we allow it.
+                                            String qcheck = "SELECT IsManager FROM Employee E WHERE E.EmployeeID = ?";
+                                            java.sql.PreparedStatement ps = conn.prepareStatement(qcheck);
+                                            ps.setString(1, (String) session.getValue("login"));
+                                            java.sql.ResultSet rs1 = ps.executeQuery();
+                                            if (!rs1.next()) // USER NOT AUTHENTICATED
+                                            {
+                                                response.sendRedirect("auth.html");
+                                            }
+
+                                            ps = conn.prepareStatement(query);
+
+                                            java.sql.ResultSet rs = ps.executeQuery();
+                                            while (rs.next()) {
+                                    %>
+
+                                    <option value="<%= rs.getString("CustomerID")%>" ><%= rs.getString("CustomerID")%></option>
+
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                                <input type="submit" value="Submit" name="submitbtn" />
                             </form>
                         </div>
                     </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Mailing List</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>Address</th>
+                                    <th>ZipCode</th>
+                                    <th>State</th>
+                                    <th>City</th>
+                                    <th>Telephone</th>
+                                    <th>Email</th>
+                                </tr>
+                                <%
+                                    row1 = 1;
+                                    query = "SELECT * FROM Person P, Customer C WHERE P.SSN = C.CustomerID;";
+                                    ps = conn.prepareStatement(query);
+                                    rs = ps.executeQuery();
+                                    while (rs.next()) {
+                                %>
+
+                                <tr>
+                                    <td><%=row1++%></td>
+                                    <td><%=rs.getString("FirstName")%></td>
+                                    <td><%=rs.getString("LastName")%></td>
+                                    <td><%=rs.getString("Address")%></td>
+                                    <td><%=rs.getInt("ZipCode")%></td>
+                                    <td><%=rs.getString("State")%></td>
+                                    <td><%=rs.getString("City")%></td>
+                                    <td><%=rs.getString("Telephone")%></td>
+                                    <td><%=rs.getString("Email")%></td>
+                                </tr>
+
+
+                                <% } %>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Recommended Items</h2>
+                        </div>
+                        <div class="panel-body">
+
+                            <form name="recommenditems" action="CustomerRepItems.jsp"  method="POST">
+                                <select name="CustomerID">
+
+
+                                    <%
+                                        row1 = 1;
+                                        query = "SELECT CustomerID FROM Customer C";
+                                        ps = conn.prepareStatement(query);
+                                        rs = ps.executeQuery();
+                                        while (rs.next()) {
+                                    %>
+
+                                    <option value="<%= rs.getString("CustomerID")%>" ><%= rs.getString("CustomerID")%></option>
+
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                                <input type="submit" value="Submit" name="submitbtn2" />
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
-            </div>   
+            </div>
+            <%    } catch (Exception e) {
+                    e.printStackTrace();
+                    out.print(e.toString());
+                } finally {
+                    try {
+                        conn.close();
+                    } catch (Exception ee) {
+                    };
+                }
+            %>
         </div>
     </div>
 </body>

@@ -1,8 +1,10 @@
 <%-- 
-    Document   : CustomerRepCRecords2
-    Created on : Dec 3, 2015, 9:16:54 AM
-    Author     : Frank
+    Document   : CustomerRepItems
+    Created on : Dec 3, 2015, 11:31:01 AM
+    Author     : fmigliorino
 --%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -48,14 +50,21 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h2 class="panel-title">Current Customers</h2>
+                            <h2 class="panel-title">Recommended Items</h2>
                         </div>
                         <div class="panel-body">
-                               
-                            <form action="editCustomer.jsp"  method="POST">
-                            
+                             <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>ItemID</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Number of Copies</th>
+                                    <th>Year</th>
+                                </tr>
+               
                                 
-                            
                             <%
                                 
                                 String mysJDBCDriver = "com.mysql.jdbc.Driver";
@@ -80,7 +89,10 @@
                                     // Master query
                                     int args = 3;
 
-                                    String query = "SELECT * FROM Person P, Customer C WHERE P.SSN = C.CustomerID AND C.CustomerID = ?;";
+                                    String query = 	"SELECT I.ItemID, I.Name, I.Type, I.Description, I.NumCopies, I.Year "+
+	"FROM Item I, Item IB, Sale S " +
+	"WHERE I.Type = IB.Type AND IB.ItemID = S.ItemID AND S.BuyerID = ?";
+
                                     //connect to the database
                                     conn = java.sql.DriverManager.getConnection(mysURL, sysprops);
                                     System.out.println("Connected successfully to database using JConnect");
@@ -100,23 +112,26 @@
                                     ps.setString(1, CustomerID);
                                     java.sql.ResultSet rs = ps.executeQuery();
                                     while (rs.next()) {
-                            %>
-                            <% out.write(CustomerID); %><br>
-                            <input type="hidden" name="CustomerID" value="<%= CustomerID %>"/>
-                            Last name: <input type="text" name="LastName" value="<%=rs.getString("LastName")%>" /> <br>
-                            First name: <input type="text" name="FirstName" value="<%=rs.getString("FirstName")%>" /> <br>
-                            Address: <input type="text" name="Address" value="<%=rs.getString("Address")%>" /> <br>
-                            Zip: <input type="number" name="ZipCode" value="<%= Integer.toString(rs.getInt("ZipCode"))%>" /> <br>
-                            Telephone: <input type="text" name="Telephone" value="<%=rs.getString("Telephone")%>" /> <br>
-                            Email: <input type="text" name="Email" value="<%=rs.getString("Email")%>" /> <br>
-                            State: <input type="text" name="State" value="<%=rs.getString("State")%>" /> <br>
-                            City <input type="text" name="State" value="<%=rs.getString("City")%>" /> <br>
-                            Rating <input type="text" name="Rating" value="<%=rs.getString("Rating")%>" /> <br>
-                            Credit Card: <input type="text" name="CreditCardNum" value="<%=rs.getString("CreditCardNum")%>" /> <br>
-                            <input type="submit" value="Submit"> <br>
+                               %>
+
+                                <tr>
+                                    <td><%=row1++%></td>
+                                    <td><%=rs.getString("ItemID")%></td>
+                                    <td><%=rs.getString("Name")%></td>
+                                    <td><%=rs.getString("Type")%></td>
+                                    <td><%=rs.getString("Description")%></td>
+                                    <td><%=rs.getInt("NumCopies")%></td>
+                                    <td><%=rs.getInt("Year")%></td>
+                                </tr>
+
+
+                                <% } %>
+                            </table>
+                        </div>
+                    </div>
                             
                             <%
-                                    }
+                                    
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     out.print(e.toString());
