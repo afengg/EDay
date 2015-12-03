@@ -32,7 +32,7 @@
 				java.sql.Statement stmt1 = conn.createStatement();
 				// First see if user is an employee, then a customer.
 
-				String query = "SELECT P.SSN FROM Person P, Employee E WHERE P.SSN=? and P.Passwd=SHA(?) and P.SSN = E.EmployeeID";
+				String query = "SELECT P.SSN, E.isManager FROM Person P, Employee E WHERE P.SSN=? and P.Passwd=SHA(?) and P.SSN = E.EmployeeID";
 				java.sql.PreparedStatement ps = conn.prepareStatement(query);
 				// ESCAPE
 				username = username.replace("'", "''");
@@ -45,7 +45,7 @@
 				if (rs.next()) {
 					// login success - Employee
 					session.putValue("login", username);
-					System.out.println("Employee login");
+					System.out.println("Employee login: isManager: " + rs.getBoolean("isManager"));
 					if (rs.getBoolean("IsManager"))
 						response.sendRedirect("ManagerHome.jsp");
 					else
