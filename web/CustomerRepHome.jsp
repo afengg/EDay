@@ -108,7 +108,7 @@
                                     <td><%=rs.getString("AuctionID")%></td>
                                     <td><%=String.format("$%,.2f", rs.getDouble("CurrentHiBid"))%></td>
                                     <td><%=rs.getString("Name")%></td>
-									<td><a href="<%="markSale?" + rs.getString("AuctionID")%>">Mark Sale</a></td>
+									<td><a href="<%="markSale.jsp?AuctionID=" + rs.getString("AuctionID")%>">Mark Sale</a></td>
                                 </tr>
 
 								<%
